@@ -1,4 +1,3 @@
-
 //circular buffer implementation with linked list
 #include <iostream>
 
@@ -9,18 +8,18 @@ struct Node
     T value;
 };
 template <class T>
-class CBuffer2
+class CBufferLL
 {
 public:
     //constructor where you decide the size of buffer
-    CBuffer2(const int& );
+    CBufferLL(const int& );
     //default constuctor, makes a buffer of size 10
-    CBuffer2();
-    ~CBuffer2();
+    CBufferLL();
+    ~CBufferLL();
     //write to buffer head
     void write(const T& );
     //read from buffer tail
-    T& read();
+    T read();
     //returns max capacity of buffer
     int getCapacity();
     //returns how many values are in buffer
@@ -37,7 +36,7 @@ private:
     Node <T>*tail;
 };
 
-template <class T> CBuffer2<T>::CBuffer2(const int& capacity)
+template <class T> CBufferLL<T>::CBufferLL(const int& capacity)
 {
     if(capacity < 1) throw std::runtime_error("constructor error: parameter must be an integer greater than 0");
     //NULL initialization of head and tail to show buffer is empty
@@ -45,13 +44,13 @@ template <class T> CBuffer2<T>::CBuffer2(const int& capacity)
     this->capacity = capacity;
 }
 
-template <class T> CBuffer2<T>::CBuffer2():CBuffer2(10){}
+template <class T> CBufferLL<T>::CBufferLL():CBufferLL(10){}
 
-template <class T> CBuffer2<T>::~CBuffer2()
+template <class T> CBufferLL<T>::~CBufferLL()
 {
     this->reset();
 }
-template <class T> void CBuffer2<T>::write(const T &value)
+template <class T> void CBufferLL<T>::write(const T &value)
 {
     if(getSize() == this->capacity) throw std::runtime_error("buffer is full");
     Node <T>* newNode = new Node<T>;
@@ -68,10 +67,10 @@ template <class T> void CBuffer2<T>::write(const T &value)
     }
     this->head->value = value;
 }
-template <class T> T& CBuffer2<T>::read()
+template <class T> T CBufferLL<T>::read()
 {
     if(this->head == NULL) throw std::runtime_error("buffer is empty");
-    T &temp = this->tail->value;
+    T temp = this->tail->value;
     
     if(this->tail != this->tail->next)
     {
@@ -86,11 +85,11 @@ template <class T> T& CBuffer2<T>::read()
     }
     return temp;
 }
-template <class T> int CBuffer2<T>::getCapacity()
+template <class T> int CBufferLL<T>::getCapacity()
 {
     return this->capacity;
 }
-template <class T> int CBuffer2<T>::getSize()
+template <class T> int CBufferLL<T>::getSize()
 {
     if(this->head == NULL) return 0;
     else
@@ -106,7 +105,7 @@ template <class T> int CBuffer2<T>::getSize()
         return size;
     }
 }
-template <class T> T& CBuffer2<T>::viewValue(int pos)
+template <class T> T& CBufferLL<T>::viewValue(int pos)
 {
     if(pos > getSize() || pos < 1)
     {
@@ -121,7 +120,7 @@ template <class T> T& CBuffer2<T>::viewValue(int pos)
     }
     return temp->value;
 }
-template <class T> void CBuffer2<T>::increaseCapacity(int addedCapacity)
+template <class T> void CBufferLL<T>::increaseCapacity(int addedCapacity)
 {
     if(addedCapacity < 1)
     {
@@ -130,7 +129,7 @@ template <class T> void CBuffer2<T>::increaseCapacity(int addedCapacity)
     }
     this->capacity +=addedCapacity;
 }
-template <class T> void CBuffer2<T>::reset()
+template <class T> void CBufferLL<T>::reset()
 {
     if(head != NULL)
     {
